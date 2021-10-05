@@ -1,4 +1,4 @@
-
+*** EVALUATION ***
 PROGRAM "SORT.abs"
 
 *********************************************************************************************
@@ -13,6 +13,8 @@ Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
 FILE SECTION
 ---------------------------------------------------------------------------------------------
 Events_c.obj                            Model: SMALL,         Lang: ANSI-C
+List_c.obj                              Model: SMALL,         Lang: ANSI-C
+Mutex_c.obj                             Model: SMALL,         Lang: ANSI-C
 Port_c.obj                              Model: SMALL,         Lang: ANSI-C
 Task_c.obj                              Model: SMALL,         Lang: ANSI-C
 main_c.obj                              Model: SMALL,         Lang: ANSI-C
@@ -20,6 +22,7 @@ queue_c.obj                             Model: SMALL,         Lang: ANSI-C
 start08_c.obj                           Model: SMALL,         Lang: ANSI-C
 Cpu_c.obj                               Model: SMALL,         Lang: ANSI-C
 IO_Map_c.obj                            Model: SMALL,         Lang: ANSI-C
+SM1_c.obj                               Model: SMALL,         Lang: ANSI-C
 SeriaAsincrono_c.obj                    Model: SMALL,         Lang: ANSI-C
 Timer_c.obj                             Model: SMALL,         Lang: ANSI-C
 Vectors_c.obj                           Model: SMALL,         Lang: ANSI-C
@@ -28,20 +31,20 @@ rtshc08.o (ansiis.lib)                  Model: SMALL,         Lang: ANSI-C
 *********************************************************************************************
 STARTUP SECTION
 ---------------------------------------------------------------------------------------------
-Entry point: 0x20A0 (_EntryPoint)
-_startupData is allocated at 0x215B and uses 6 Bytes
+Entry point: 0x209A (_EntryPoint)
+_startupData is allocated at 0x2170 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0xA0     470
-  _Copy    *toCopyDownBeg 0x262B
+  _Range   pZeroOut       0xA0     661
+  _Copy    *toCopyDownBeg 0x297B
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.text                           1185     R     0x216D     0x260D   ROM
-.rodata1                          29     R     0x260E     0x262A   ROM
+.text                           2005     R     0x2182     0x2956   ROM
+.rodata1                          36     R     0x2957     0x297A   ROM
 .abs_section_ffbd                  1     R     0xFFBD     0xFFBD   .absSeg0
 .abs_section_ffbf                  1     R     0xFFBF     0xFFBF   .absSeg1
 .abs_section_0                     1   N/I        0x0        0x0   .absSeg2
@@ -225,16 +228,16 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_1816                  2   N/I     0x1816     0x1817   .absSeg180
 .abs_section_1870                  2   N/I     0x1870     0x1871   .absSeg181
 .abs_section_ffc0                 64     R     0xFFC0     0xFFFF   .absSeg182
-.bss                               5   R/W       0xA0       0xA4   RAM
-.startData                        18     R     0x215B     0x216C   ROM
-.init                            219     R     0x2080     0x215A   ROM
-.common                          465   R/W       0xA5      0x275   RAM
-.stack                           256   R/W      0x276      0x375   RAM
-.copy                              2     R     0x262B     0x262C   ROM
+.bss                              10   R/W       0xA0       0xA9   RAM
+.startData                        18     R     0x2170     0x2181   ROM
+.init                            240     R     0x2080     0x216F   ROM
+.common                          651   R/W       0xAA      0x334   RAM
+.stack                           256   R/W      0x335      0x434   RAM
+.copy                              2     R     0x297B     0x297C   ROM
 
 Summary of section sizes per section type:
-READ_ONLY (R):         5EF (dec:     1519)
-READ_WRITE (R/W):      2D6 (dec:      726)
+READ_ONLY (R):         93F (dec:     2367)
+READ_WRITE (R/W):      395 (dec:      917)
 NO_INIT (N/I):          CF (dec:      207)
 
 *********************************************************************************************
@@ -248,68 +251,87 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- Events_c.obj --
 - PROCEDURES:
-     Cpu_OnSwINT                               216D       F      15       1   .text       
+     SM1_OnRxChar                              2182       1       1       1   .text       
+     SM1_OnTxChar                              2183       1       1       1   .text       
+     SM1_OnError                               2184       1       1       1   .text       
+- VARIABLES:
+MODULE:                 -- List_c.obj --
+- PROCEDURES:
+     List_Create                               2185       B      11       1   .text       
+     List_Add                                  2190      66     102       1   .text       
+     List_Get                                  21F6      A0     160       1   .text       
+- VARIABLES:
+MODULE:                 -- Mutex_c.obj --
+- PROCEDURES:
+     Mutex_Create                              2296      17      23       1   .text       
+     Mutex_Take                                22AD      55      85       3   .text       
+     Mutex_Give                                2302      52      82       3   .text       
 - VARIABLES:
 MODULE:                 -- Port_c.obj --
 - PROCEDURES:
-     savecontext                               217C       5       5       1   .text       
-     restortcontext                            2181       5       5       1   .text       
-     Tick_OnInterrupt                          2186      18      24       1   .text       
-     start                                     219E       C      12       1   .text       
-     InicializarStack                          21AA      71     113       1   .text       
+     Tick_OnInterrupt                          2354      18      24       1   .text       
+     Cpu_OnSWI                                 236C      11      17       1   .text       
+     start                                     237D       C      12       1   .text       
+     InicializarStack                          2389      71     113       1   .text       
 - VARIABLES:
 MODULE:                 -- Task_c.obj --
 - PROCEDURES:
-     InactiveTask                              221B       3       3       1   .text       
-     RTOS_Init                                 221E       6       6       1   .text       
-     Scheduler                                 2224      76     118       3   .text       
-     TaskBuilder                               229A      8A     138       3   .text       
+     InactiveTask                              23FA       3       3       1   .text       
+     RTOS_Init                                 23FD       C      12       1   .text       
+     Scheduler                                 2409      9F     159       3   .text       
+     TaskBuilder                               24A8      8A     138       4   .text       
+     Task_AddReady                             2532      36      54       1   .text       
 - VARIABLES:
-     MainQueue                                   A5       8       8       5   .common     
+     MainQueue                                   AA       8       8       6   .common     
+     MainList                                    B2       5       5       3   .common     
 MODULE:                 -- main_c.obj --
 - PROCEDURES:
-     main                                      2324      73     115       1   .text       
-     Tarea1                                    2397      12      18       1   .text       
-     Tarea2                                    23A9      12      18       1   .text       
+     main                                      2568      9D     157       2   .text       
+     Tarea2                                    2605      28      40       1   .text       
+     Tarea3                                    262D      28      40       1   .text       
+     Tarea4                                    2655      28      40       1   .text       
 - VARIABLES:
-     STRING.Tarea1.1                           260E       7       7       1   .rodata1    
-     STRING.Tarea2.2                           2615       7       7       1   .rodata1    
-     STRING.tarea.inactiva.3                   261C       F      15       1   .rodata1    
-     ActualTask                                  A0       2       2       6   .bss        
-     actualstack1                                A2       2       2       9   .bss        
-     TCB_Tarea2                                  AD      18      24       1   .common     
-     TCB_Tarea1                                  C5      18      24       1   .common     
-     Stack_Tarea1                                DD      80     128       1   .common     
-     Stack_Tarea2                               15D      80     128       1   .common     
-     TCB_InactiveTask                           1DD      18      24       3   .common     
-     Stack_InactiveTask                         1F5      80     128       1   .common     
+     STRING.Tarea2.1                           2957       7       7       1   .rodata1    
+     STRING.Tarea3.2                           295E       7       7       1   .rodata1    
+     STRING.Tarea4.3                           2965       7       7       1   .rodata1    
+     STRING.Tarea.Inactiva.4                   296C       F      15       1   .rodata1    
+     ActualTask                                  A0       2       2       8   .bss        
+     actualstack1                                A2       2       2       8   .bss        
+     Mutex_LED                                   B7       9       9       7   .common     
+     TCB_Tarea4                                  C0      1D      29       1   .common     
+     TCB_Tarea3                                  DD      1D      29       1   .common     
+     TCB_Tarea2                                  FA      1D      29       1   .common     
+     Stack_Tarea2                               117      80     128       1   .common     
+     Stack_Tarea3                               197      80     128       1   .common     
+     Stack_Tarea4                               217      80     128       1   .common     
+     Stack_InactiveTask                         297      80     128       1   .common     
+     TCB_InactiveTask                           317      1D      29       4   .common     
 MODULE:                 -- queue_c.obj --
 - PROCEDURES:
-     Queue_Create                              23BB      15      21       1   .text       
-     Queue_Add                                 23D0      66     102       2   .text       
-     Queue_Get                                 2436      52      82       1   .text       
-     Queue_GetCount                            2488      28      40       1   .text       
+     Queue_Create                              267D      15      21       2   .text       
+     Queue_Add                                 2692      66     102       4   .text       
+     Queue_Get                                 26F8      52      82       2   .text       
+     Queue_GetCount                            274A      28      40       2   .text       
 - VARIABLES:
 MODULE:                 -- start08_c.obj --
 - PROCEDURES:
-     loadByte                                  24B0       E      14       5   .text       
-     Init                                      24BE      6D     109       1   .text       
-     _Startup                                  252B       9       9       1   .text       
+     loadByte                                  2772       E      14       5   .text       
+     Init                                      2780      6D     109       1   .text       
+     _Startup                                  27ED       9       9       1   .text       
 - VARIABLES:
-     _startupData                              215B       6       6       4   .startData  
+     _startupData                              2170       6       6       4   .startData  
 - LABELS:
-     __SEG_END_SSTACK                           376       0       0       1               
+     __SEG_END_SSTACK                           435       0       0       1               
 MODULE:                 -- Cpu_c.obj --
 - PROCEDURES:
-     Cpu_SWIInterrupt                          2080       6       6       1   .init       
-     Cpu_Interrupt                             2086       4       4      29   .init       
-     Cpu_Delay100US                            208A      16      22       4   .init       
-     _EntryPoint                               20A0      44      68       1   .init       
-     PE_low_level_init                         20E4      77     119       1   .init       
+     Cpu_Interrupt                             2080       4       4      28   .init       
+     Cpu_Delay100US                            2084      16      22       6   .init       
+     _EntryPoint                               209A      49      73       1   .init       
+     PE_low_level_init                         20E3      8D     141       1   .init       
 - VARIABLES:
      NVPROT_INIT                               FFBD       1       1       0   .abs_section_ffbd
      NVOPT_INIT                                FFBF       1       1       0   .abs_section_ffbf
-     CCR_lock                                   275       1       1       1   .common     
+     CCR_lock                                   334       1       1       1   .common     
 MODULE:                 -- IO_Map_c.obj --
 - PROCEDURES:
 - VARIABLES:
@@ -317,14 +339,14 @@ MODULE:                 -- IO_Map_c.obj --
      _PTADD                                       1       1       1       0   .abs_section_1
      _PTBD                                        2       1       1       1   .abs_section_2
      _PTBDD                                       3       1       1       2   .abs_section_3
-     _PTCD                                        4       1       1       6   .abs_section_4
+     _PTCD                                        4       1       1       8   .abs_section_4
      _PTCDD                                       5       1       1       2   .abs_section_5
      _PTDD                                        6       1       1       0   .abs_section_6
      _PTDDD                                       7       1       1       0   .abs_section_7
-     _PTED                                        8       1       1       0   .abs_section_8
-     _PTEDD                                       9       1       1       0   .abs_section_9
-     _PTFD                                        A       1       1       0   .abs_section_a
-     _PTFDD                                       B       1       1       0   .abs_section_b
+     _PTED                                        8       1       1       1   .abs_section_8
+     _PTEDD                                       9       1       1       2   .abs_section_9
+     _PTFD                                        A       1       1       1   .abs_section_a
+     _PTFDD                                       B       1       1       1   .abs_section_b
      _KBI1SC                                      C       1       1       0   .abs_section_c
      _KBI1PE                                      D       1       1       0   .abs_section_d
      _KBI1ES                                      E       1       1       0   .abs_section_e
@@ -347,11 +369,11 @@ MODULE:                 -- IO_Map_c.obj --
      _SCI1S2                                     25       1       1       1   .abs_section_25
      _SCI1C3                                     26       1       1       1   .abs_section_26
      _SCI1D                                      27       1       1       0   .abs_section_27
-     _SPI1C1                                     28       1       1       0   .abs_section_28
-     _SPI1C2                                     29       1       1       0   .abs_section_29
-     _SPI1BR                                     2A       1       1       0   .abs_section_2a
-     _SPI1S                                      2B       1       1       0   .abs_section_2b
-     _SPI1D                                      2D       1       1       0   .abs_section_2d
+     _SPI1C1                                     28       1       1       2   .abs_section_28
+     _SPI1C2                                     29       1       1       1   .abs_section_29
+     _SPI1BR                                     2A       1       1       1   .abs_section_2a
+     _SPI1S                                      2B       1       1       2   .abs_section_2b
+     _SPI1D                                      2D       1       1       2   .abs_section_2d
      _PTJD                                       2E       1       1       0   .abs_section_2e
      _PTJDD                                      2F       1       1       0   .abs_section_2f
      _IIC1A                                      30       1       1       0   .abs_section_30
@@ -393,7 +415,7 @@ MODULE:                 -- IO_Map_c.obj --
      _SRS                                      1800       1       1       0   .abs_section_1800
      _SBDFR                                    1801       1       1       0   .abs_section_1801
      _SOPT1                                    1802       1       1       1   .abs_section_1802
-     _SOPT2                                    1803       1       1       0   .abs_section_1803
+     _SOPT2                                    1803       1       1       1   .abs_section_1803
      _SPMSC1                                   1808       1       1       1   .abs_section_1808
      _SPMSC2                                   1809       1       1       1   .abs_section_1809
      _SPMSC3                                   180B       1       1       2   .abs_section_180b
@@ -436,7 +458,7 @@ MODULE:                 -- IO_Map_c.obj --
      _PTEPE                                    1850       1       1       0   .abs_section_1850
      _PTESE                                    1851       1       1       1   .abs_section_1851
      _PTEDS                                    1852       1       1       1   .abs_section_1852
-     _PTFPE                                    1854       1       1       0   .abs_section_1854
+     _PTFPE                                    1854       1       1       1   .abs_section_1854
      _PTFSE                                    1855       1       1       1   .abs_section_1855
      _PTFDS                                    1856       1       1       1   .abs_section_1856
      _PTGPE                                    1858       1       1       0   .abs_section_1858
@@ -493,64 +515,80 @@ MODULE:                 -- IO_Map_c.obj --
      _DBGCC                                    1814       2       2       0   .abs_section_1814
      _DBGF                                     1816       2       2       0   .abs_section_1816
      _SCI2BD                                   1870       2       2       0   .abs_section_1870
+MODULE:                 -- SM1_c.obj --
+- PROCEDURES:
+     SM1_Interrupt                             27F6      52      82       1   .text       
+     SM1_Init                                  2848      16      22       1   .text       
+- VARIABLES:
+     SerFlag                                     A4       1       1       5   .bss        
+     ErrFlag                                     A5       1       1       3   .bss        
+     BufferRead                                  A6       1       1       1   .bss        
 MODULE:                 -- SeriaAsincrono_c.obj --
 - PROCEDURES:
-     SeriaAsincrono_Init                       2534      12      18       1   .text       
+     SeriaAsincrono_Init                       285E      1A      26       1   .text       
 - VARIABLES:
+     SerFlag                                     A7       1       1       1   .bss        
+     EnUser                                      A8       1       1       1   .bss        
 MODULE:                 -- Timer_c.obj --
 - PROCEDURES:
-     HWEnDi                                    2546      12      18       1   .text       
-     Timer_Init                                2558      11      17       1   .text       
+     HWEnDi                                    2878      12      18       1   .text       
+     Timer_Init                                288A      12      18       1   .text       
 - VARIABLES:
-     EnUser                                      A4       1       1       2   .bss        
+     EnUser                                      A9       1       1       2   .bss        
 MODULE:                 -- Vectors_c.obj --
 - PROCEDURES:
 - VARIABLES:
      _vect                                     FFC0      40      64       0   .abs_section_ffc0
 MODULE:                 -- rtshc08.o (ansiis.lib) --
 - PROCEDURES:
-     _ENTER_UNARY_L                            2569      29      41       2   .text       
-     _LINC                                     2592      16      22       1   .text       
-     _LDEC                                     25A8      1C      28       1   .text       
-     _COPY                                     25C4      30      48       2   .text       
-     _POP32                                    25F4      1A      26       2   .text       
+     _ENTER_UNARY_L                            289C      29      41       2   .text       
+     _ICMP                                     28C5      16      22       1   .text       
+     _LINC                                     28DB      16      22       1   .text       
+     _LDEC                                     28F1      1C      28       1   .text       
+     _COPY                                     290D      30      48       2   .text       
+     _POP32                                    293D      1A      26       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  Events_c.obj                                 0     15      0
-  Port_c.obj                                   0    159      0
-  Task_c.obj                                   8    265      0
-  main_c.obj                                 460    151     29
+  Events_c.obj                                 0      3      0
+  List_c.obj                                   0    273      0
+  Mutex_c.obj                                  0    190      0
+  Port_c.obj                                   0    166      0
+  Task_c.obj                                  13    366      0
+  main_c.obj                                 641    277     36
   queue_c.obj                                  0    245      0
   start08_c.obj                                0    132      0
-  Cpu_c.obj                                    1    219      2
+  Cpu_c.obj                                    1    240      2
   IO_Map_c.obj                               207      0      0
-  SeriaAsincrono_c.obj                         0     18      0
-  Timer_c.obj                                  1     35      0
+  SM1_c.obj                                    3    104      0
+  SeriaAsincrono_c.obj                         2     26      0
+  Timer_c.obj                                  1     36      0
   Vectors_c.obj                                0      0     64
-  rtshc08.o (ansiis.lib)                       0    165      0
+  rtshc08.o (ansiis.lib)                       0    187      0
   other                                      256     18      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  Cpu_OnSwINT savecontext restortcontext Tick_OnInterrupt start 
-  InicializarStack InactiveTask RTOS_Init Scheduler TaskBuilder main Tarea1 
-  Tarea2 Queue_Create Queue_Add Queue_Get Queue_GetCount loadByte Init _Startup 
-  SeriaAsincrono_Init HWEnDi Timer_Init _ENTER_UNARY_L _LINC _LDEC _COPY _POP32 
+  SM1_OnRxChar SM1_OnTxChar SM1_OnError List_Create List_Add List_Get 
+  Mutex_Create Mutex_Take Mutex_Give Tick_OnInterrupt Cpu_OnSWI start 
+  InicializarStack InactiveTask RTOS_Init Scheduler TaskBuilder Task_AddReady 
+  main Tarea2 Tarea3 Tarea4 Queue_Create Queue_Add Queue_Get Queue_GetCount 
+  loadByte Init _Startup SM1_Interrupt SM1_Init SeriaAsincrono_Init HWEnDi 
+  Timer_Init _ENTER_UNARY_L _ICMP _LINC _LDEC _COPY _POP32 
 SECTION: ".bss"
-  ActualTask actualstack1 EnUser 
+  ActualTask actualstack1 SerFlag ErrFlag BufferRead SerFlag EnUser EnUser 
 SECTION: ".init"
-  Cpu_SWIInterrupt Cpu_Interrupt Cpu_Delay100US _EntryPoint PE_low_level_init 
+  Cpu_Interrupt Cpu_Delay100US _EntryPoint PE_low_level_init 
 SECTION: ".rodata1"
-  STRING.Tarea1.1 STRING.Tarea2.2 STRING.tarea.inactiva.3 
+  STRING.Tarea2.1 STRING.Tarea3.2 STRING.Tarea4.3 STRING.Tarea.Inactiva.4 
 SECTION: ".common"
-  MainQueue TCB_Tarea2 TCB_Tarea1 Stack_Tarea1 Stack_Tarea2 TCB_InactiveTask 
-  Stack_InactiveTask CCR_lock 
+  MainQueue MainList Mutex_LED TCB_Tarea4 TCB_Tarea3 TCB_Tarea2 Stack_Tarea2 
+  Stack_Tarea3 Stack_Tarea4 Stack_InactiveTask TCB_InactiveTask CCR_lock 
 SECTION: ".abs_section_ffbd"
   NVPROT_INIT 
 SECTION: ".abs_section_ffbf"
@@ -926,14 +964,14 @@ OBJECT LIST SORTED BY ADDRESS
      _PTADD                                       1       1       1       0   .abs_section_1
      _PTBD                                        2       1       1       1   .abs_section_2
      _PTBDD                                       3       1       1       2   .abs_section_3
-     _PTCD                                        4       1       1       6   .abs_section_4
+     _PTCD                                        4       1       1       8   .abs_section_4
      _PTCDD                                       5       1       1       2   .abs_section_5
      _PTDD                                        6       1       1       0   .abs_section_6
      _PTDDD                                       7       1       1       0   .abs_section_7
-     _PTED                                        8       1       1       0   .abs_section_8
-     _PTEDD                                       9       1       1       0   .abs_section_9
-     _PTFD                                        A       1       1       0   .abs_section_a
-     _PTFDD                                       B       1       1       0   .abs_section_b
+     _PTED                                        8       1       1       1   .abs_section_8
+     _PTEDD                                       9       1       1       2   .abs_section_9
+     _PTFD                                        A       1       1       1   .abs_section_a
+     _PTFDD                                       B       1       1       1   .abs_section_b
      _KBI1SC                                      C       1       1       0   .abs_section_c
      _KBI1PE                                      D       1       1       0   .abs_section_d
      _KBI1ES                                      E       1       1       0   .abs_section_e
@@ -959,11 +997,11 @@ OBJECT LIST SORTED BY ADDRESS
      _SCI1S2                                     25       1       1       1   .abs_section_25
      _SCI1C3                                     26       1       1       1   .abs_section_26
      _SCI1D                                      27       1       1       0   .abs_section_27
-     _SPI1C1                                     28       1       1       0   .abs_section_28
-     _SPI1C2                                     29       1       1       0   .abs_section_29
-     _SPI1BR                                     2A       1       1       0   .abs_section_2a
-     _SPI1S                                      2B       1       1       0   .abs_section_2b
-     _SPI1D                                      2D       1       1       0   .abs_section_2d
+     _SPI1C1                                     28       1       1       2   .abs_section_28
+     _SPI1C2                                     29       1       1       1   .abs_section_29
+     _SPI1BR                                     2A       1       1       1   .abs_section_2a
+     _SPI1S                                      2B       1       1       2   .abs_section_2b
+     _SPI1D                                      2D       1       1       2   .abs_section_2d
      _PTJD                                       2E       1       1       0   .abs_section_2e
      _PTJDD                                      2F       1       1       0   .abs_section_2f
      _IIC1A                                      30       1       1       0   .abs_section_30
@@ -1020,21 +1058,30 @@ OBJECT LIST SORTED BY ADDRESS
      _LBP                                        7D       1       1       0   .abs_section_7d
      _LB                                         7E       1       1       0   .abs_section_7e
      _LAPAB                                      7F       1       1       0   .abs_section_7f
-     ActualTask                                  A0       2       2       6   .bss        
-     actualstack1                                A2       2       2       9   .bss        
-     EnUser                                      A4       1       1       2   .bss        
-     MainQueue                                   A5       8       8       5   .common     
-     TCB_Tarea2                                  AD      18      24       1   .common     
-     TCB_Tarea1                                  C5      18      24       1   .common     
-     Stack_Tarea1                                DD      80     128       1   .common     
-     Stack_Tarea2                               15D      80     128       1   .common     
-     TCB_InactiveTask                           1DD      18      24       3   .common     
-     Stack_InactiveTask                         1F5      80     128       1   .common     
-     CCR_lock                                   275       1       1       1   .common     
+     ActualTask                                  A0       2       2       8   .bss        
+     actualstack1                                A2       2       2       8   .bss        
+     SerFlag                                     A4       1       1       5   .bss        
+     ErrFlag                                     A5       1       1       3   .bss        
+     BufferRead                                  A6       1       1       1   .bss        
+     SerFlag                                     A7       1       1       1   .bss        
+     EnUser                                      A8       1       1       1   .bss        
+     EnUser                                      A9       1       1       2   .bss        
+     MainQueue                                   AA       8       8       6   .common     
+     MainList                                    B2       5       5       3   .common     
+     Mutex_LED                                   B7       9       9       7   .common     
+     TCB_Tarea4                                  C0      1D      29       1   .common     
+     TCB_Tarea3                                  DD      1D      29       1   .common     
+     TCB_Tarea2                                  FA      1D      29       1   .common     
+     Stack_Tarea2                               117      80     128       1   .common     
+     Stack_Tarea3                               197      80     128       1   .common     
+     Stack_Tarea4                               217      80     128       1   .common     
+     Stack_InactiveTask                         297      80     128       1   .common     
+     TCB_InactiveTask                           317      1D      29       4   .common     
+     CCR_lock                                   334       1       1       1   .common     
      _SRS                                      1800       1       1       0   .abs_section_1800
      _SBDFR                                    1801       1       1       0   .abs_section_1801
      _SOPT1                                    1802       1       1       1   .abs_section_1802
-     _SOPT2                                    1803       1       1       0   .abs_section_1803
+     _SOPT2                                    1803       1       1       1   .abs_section_1803
      _SDID                                     1806       2       2       0   .abs_section_1806
      _SPMSC1                                   1808       1       1       1   .abs_section_1808
      _SPMSC2                                   1809       1       1       1   .abs_section_1809
@@ -1082,7 +1129,7 @@ OBJECT LIST SORTED BY ADDRESS
      _PTEPE                                    1850       1       1       0   .abs_section_1850
      _PTESE                                    1851       1       1       1   .abs_section_1851
      _PTEDS                                    1852       1       1       1   .abs_section_1852
-     _PTFPE                                    1854       1       1       0   .abs_section_1854
+     _PTFPE                                    1854       1       1       1   .abs_section_1854
      _PTFSE                                    1855       1       1       1   .abs_section_1855
      _PTFDS                                    1856       1       1       1   .abs_section_1856
      _PTGPE                                    1858       1       1       0   .abs_section_1858
@@ -1113,42 +1160,54 @@ OBJECT LIST SORTED BY ADDRESS
      _PTECLR                                   187B       1       1       0   .abs_section_187b
      _PTCTOG                                   187C       1       1       0   .abs_section_187c
      _PTETOG                                   187D       1       1       0   .abs_section_187d
-     Cpu_SWIInterrupt                          2080       6       6       1   .init       
-     Cpu_Interrupt                             2086       4       4      29   .init       
-     Cpu_Delay100US                            208A      16      22       4   .init       
-     _EntryPoint                               20A0      44      68       1   .init       
-     PE_low_level_init                         20E4      77     119       1   .init       
-     Cpu_OnSwINT                               216D       F      15       1   .text       
-     savecontext                               217C       5       5       1   .text       
-     restortcontext                            2181       5       5       1   .text       
-     Tick_OnInterrupt                          2186      18      24       1   .text       
-     start                                     219E       C      12       1   .text       
-     InicializarStack                          21AA      71     113       1   .text       
-     InactiveTask                              221B       3       3       1   .text       
-     RTOS_Init                                 221E       6       6       1   .text       
-     Scheduler                                 2224      76     118       3   .text       
-     TaskBuilder                               229A      8A     138       3   .text       
-     main                                      2324      73     115       1   .text       
-     Tarea1                                    2397      12      18       1   .text       
-     Tarea2                                    23A9      12      18       1   .text       
-     Queue_Create                              23BB      15      21       1   .text       
-     Queue_Add                                 23D0      66     102       2   .text       
-     Queue_Get                                 2436      52      82       1   .text       
-     Queue_GetCount                            2488      28      40       1   .text       
-     loadByte                                  24B0       E      14       5   .text       
-     Init                                      24BE      6D     109       1   .text       
-     _Startup                                  252B       9       9       1   .text       
-     SeriaAsincrono_Init                       2534      12      18       1   .text       
-     HWEnDi                                    2546      12      18       1   .text       
-     Timer_Init                                2558      11      17       1   .text       
-     _ENTER_UNARY_L                            2569      29      41       2   .text       
-     _LINC                                     2592      16      22       1   .text       
-     _LDEC                                     25A8      1C      28       1   .text       
-     _COPY                                     25C4      30      48       2   .text       
-     _POP32                                    25F4      1A      26       2   .text       
-     STRING.Tarea1.1                           260E       7       7       1   .rodata1    
-     STRING.Tarea2.2                           2615       7       7       1   .rodata1    
-     STRING.tarea.inactiva.3                   261C       F      15       1   .rodata1    
+     Cpu_Interrupt                             2080       4       4      28   .init       
+     Cpu_Delay100US                            2084      16      22       6   .init       
+     _EntryPoint                               209A      49      73       1   .init       
+     PE_low_level_init                         20E3      8D     141       1   .init       
+     SM1_OnRxChar                              2182       1       1       1   .text       
+     SM1_OnTxChar                              2183       1       1       1   .text       
+     SM1_OnError                               2184       1       1       1   .text       
+     List_Create                               2185       B      11       1   .text       
+     List_Add                                  2190      66     102       1   .text       
+     List_Get                                  21F6      A0     160       1   .text       
+     Mutex_Create                              2296      17      23       1   .text       
+     Mutex_Take                                22AD      55      85       3   .text       
+     Mutex_Give                                2302      52      82       3   .text       
+     Tick_OnInterrupt                          2354      18      24       1   .text       
+     Cpu_OnSWI                                 236C      11      17       1   .text       
+     start                                     237D       C      12       1   .text       
+     InicializarStack                          2389      71     113       1   .text       
+     InactiveTask                              23FA       3       3       1   .text       
+     RTOS_Init                                 23FD       C      12       1   .text       
+     Scheduler                                 2409      9F     159       3   .text       
+     TaskBuilder                               24A8      8A     138       4   .text       
+     Task_AddReady                             2532      36      54       1   .text       
+     main                                      2568      9D     157       2   .text       
+     Tarea2                                    2605      28      40       1   .text       
+     Tarea3                                    262D      28      40       1   .text       
+     Tarea4                                    2655      28      40       1   .text       
+     Queue_Create                              267D      15      21       2   .text       
+     Queue_Add                                 2692      66     102       4   .text       
+     Queue_Get                                 26F8      52      82       2   .text       
+     Queue_GetCount                            274A      28      40       2   .text       
+     loadByte                                  2772       E      14       5   .text       
+     Init                                      2780      6D     109       1   .text       
+     _Startup                                  27ED       9       9       1   .text       
+     SM1_Interrupt                             27F6      52      82       1   .text       
+     SM1_Init                                  2848      16      22       1   .text       
+     SeriaAsincrono_Init                       285E      1A      26       1   .text       
+     HWEnDi                                    2878      12      18       1   .text       
+     Timer_Init                                288A      12      18       1   .text       
+     _ENTER_UNARY_L                            289C      29      41       2   .text       
+     _ICMP                                     28C5      16      22       1   .text       
+     _LINC                                     28DB      16      22       1   .text       
+     _LDEC                                     28F1      1C      28       1   .text       
+     _COPY                                     290D      30      48       2   .text       
+     _POP32                                    293D      1A      26       2   .text       
+     STRING.Tarea2.1                           2957       7       7       1   .rodata1    
+     STRING.Tarea3.2                           295E       7       7       1   .rodata1    
+     STRING.Tarea4.3                           2965       7       7       1   .rodata1    
+     STRING.Tarea.Inactiva.4                   296C       F      15       1   .rodata1    
      NVPROT_INIT                               FFBD       1       1       0   .abs_section_ffbd
      NVOPT_INIT                                FFBF       1       1       0   .abs_section_ffbf
      _vect                                     FFC0      40      64       0   .abs_section_ffc0
@@ -1158,11 +1217,25 @@ UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
 Events_c.obj:
-  Timer_OnInterrupt 
+  Cpu_OnSwINT Timer_OnInterrupt 
+List_c.obj:
+  List_CreateDynamic List_AddDynamic List_Top List_GetDynamic List_GetCount 
+Port_c.obj:
+  savecontext restortcontext 
+Task_c.obj:
+  Task_Star 
+main_c.obj:
+  Tarea1 TX_TransmitirBloque Spitarea 
 queue_c.obj:
   Queue_CreateDinamic Queue_AddDinamic Queue_Top Queue_GetDinamic 
+Cpu_c.obj:
+  Cpu_SWIInterrupt 
+SM1_c.obj:
+  SM1_RecvChar SM1_SendChar SM1_GetCharsInRxBuf SM1_GetCharsInTxBuf 
+  SM1_GetError 
 SeriaAsincrono_c.obj:
-  SeriaAsincrono_RecvChar SeriaAsincrono_SendChar 
+  SeriaAsincrono_Enable SeriaAsincrono_Disable SeriaAsincrono_RecvChar 
+  SeriaAsincrono_SendChar SeriaAsincrono_GetCharsInTxBuf 
 Timer_c.obj:
   Timer_Enable Timer_Disable Timer_Interrupt 
 rtshc08.o (ansiis.lib):
@@ -1174,68 +1247,88 @@ rtshc08.o (ansiis.lib):
   _LDIVMOD _NEG_L_HX _ABS_L_HX _SPLITSIGN_L _LMODU_k_is_k_mod_j 
   _LDIVU_k_is_k_div_j _LMODS_k_is_k_mod_j _LDIVS_k_is_k_div_j _LCMP_k_rel_j 
   _CMP24_k_rel_j _BMULS _BDIVS _BMODS _IMUL_STAR08 _IDIVS_STAR08 _IDIVU_STAR08 
-  _IMODS_STAR08 _IMODU_STAR08 _IDIVU_8 _IMODU_8 _IASR _ILSR _ILSL _ICMP _LNEG 
-  _LNOT _LADD _LADD_RC _LSUB _LSUB_LC _LSUB_RC _LAND _LAND_RC _LOR _LOR_RC 
-  _LXOR _LXOR_RC _LMUL _LMUL_RC _LDIVS _LDIVS_LC _LDIVS_RC _LDIVU _LDIVU_LC 
-  _LDIVU_RC _LMODS _LMODS_LC _LMODS_RC _LMODU _LMODU_LC _LMODU_RC _LASR _LLSR 
-  _LLSL _LCMP _LCMP_RC _PUSH_ARGS_24 _ENTER_BINARY_24_RC _ENTER_BINARY_24 
-  _CMP24 _CMP24_RC _COPY_L _POP64 _STORE32 _STORE64 _SEXT8_32 _SEXT16_32 
-  _CALL_STAR08 _CALL_STAR08_FAR _Jump_Table_Addr _Jump_Table_Offset 
-  _Jump_Table_Header_Addr _Jump_Table_Header_Offset _Search_Table_16_Addr 
-  _Search_Table_16_Offset _Search_Table_8_Addr _Search_Table_8_Offset _PUSH_CC 
-  _POP_CC _CONV_FAR_TO_NEAR _CONV_FAR_TO_LINEAR _CONV_LINEAR_TO_FAR 
+  _IMODS_STAR08 _IMODU_STAR08 _IDIVU_8 _IMODU_8 _IASR _ILSR _ILSL _LNEG _LNOT 
+  _LADD _LADD_RC _LSUB _LSUB_LC _LSUB_RC _LAND _LAND_RC _LOR _LOR_RC _LXOR 
+  _LXOR_RC _LMUL _LMUL_RC _LDIVS _LDIVS_LC _LDIVS_RC _LDIVU _LDIVU_LC _LDIVU_RC 
+  _LMODS _LMODS_LC _LMODS_RC _LMODU _LMODU_LC _LMODU_RC _LASR _LLSR _LLSL _LCMP 
+  _LCMP_RC _PUSH_ARGS_24 _ENTER_BINARY_24_RC _ENTER_BINARY_24 _CMP24 _CMP24_RC 
+  _COPY_L _POP64 _STORE32 _STORE64 _SEXT8_32 _SEXT16_32 _CALL_STAR08 
+  _CALL_STAR08_FAR _Jump_Table_Addr _Jump_Table_Offset _Jump_Table_Header_Addr 
+  _Jump_Table_Header_Offset _Search_Table_16_Addr _Search_Table_16_Offset 
+  _Search_Table_8_Addr _Search_Table_8_Offset _PUSH_CC _POP_CC 
+  _CONV_FAR_TO_NEAR _CONV_FAR_TO_LINEAR _CONV_LINEAR_TO_FAR 
 NOT USED VARIABLES
+main_c.obj:
+  TCB_Tarea1 Stack_Tarea1 Stack_Spitarea TCB_Spitarea velocidad direccion 
+  rango 
 Cpu_c.obj:
   CCR_reg 
+SM1_c.obj:
+  CCR_reg 
+SeriaAsincrono_c.obj:
+  BufferWrite 
 rtshc08.o (ansiis.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0x262B ---- SIZE       2 ---
+------- ROM-ADDRESS: 0x297B ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
 *********************************************************************************************
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
-Cpu_SWIInterrupt          USES Cpu_OnSwINT 
-_EntryPoint               USES _SOPT1 _SPMSC1 _SPMSC2 _SPMSC3 _ICSTRM _ICSSC 
-                                _ICSC1 _ICSC2 _Startup 
+_EntryPoint               USES _SOPT1 _SOPT2 _SPMSC1 _SPMSC2 _SPMSC3 _ICSTRM 
+                                _ICSSC _ICSC1 _ICSC2 _Startup 
 PE_low_level_init         USES _SCGC1 _SCGC2 _PTCD _PTCPE _PTCDD _PTBDD _PTBD 
-                                _PTASE _PTBSE _PTCSE _PTDSE _PTESE _PTFSE _PTGSE 
-                                _PTHSE _PTJSE _PTADS _PTBDS _PTCDS _PTDDS _PTEDS 
-                                _PTFDS _PTGDS _PTHDS _PTJDS Timer_Init 
-                                SeriaAsincrono_Init CCR_lock 
-Cpu_OnSwINT               USES savecontext actualstack1 Scheduler 
-                                restortcontext 
-savecontext               USES actualstack1 
-restortcontext            USES actualstack1 
+                                _PTFD _PTFPE _PTFDD _PTEDD _PTED _PTASE _PTBSE 
+                                _PTCSE _PTDSE _PTESE _PTFSE _PTGSE _PTHSE _PTJSE 
+                                _PTADS _PTBDS _PTCDS _PTDDS _PTEDS _PTFDS _PTGDS 
+                                _PTHDS _PTJDS Timer_Init SeriaAsincrono_Init SM1_Init 
+                                CCR_lock 
+List_Get                  USES _ICMP 
+Mutex_Create              USES Queue_Create 
+Mutex_Take                USES ActualTask Queue_Add 
+Mutex_Give                USES Queue_GetCount Queue_Get Task_AddReady 
 Tick_OnInterrupt          USES actualstack1 _RTCSC Scheduler 
+Cpu_OnSWI                 USES actualstack1 Scheduler 
 start                     USES actualstack1 Scheduler 
-RTOS_Init                 USES MainQueue Queue_Create 
+RTOS_Init                 USES MainQueue Queue_Create MainList List_Create 
 Scheduler                 USES ActualTask TCB_InactiveTask MainQueue Queue_Add 
-                                Queue_GetCount Queue_Get 
+                                MainList List_Add Queue_GetCount Queue_Get 
 TaskBuilder               USES _COPY InicializarStack MainQueue Queue_Add 
-main                      USES PE_low_level_init RTOS_Init TCB_Tarea1 
-                                STRING.Tarea1.1 Stack_Tarea1 Tarea1 TaskBuilder TCB_Tarea2 
-                                STRING.Tarea2.2 Stack_Tarea2 Tarea2 TCB_InactiveTask 
-                                STRING.tarea.inactiva.3 Stack_InactiveTask InactiveTask start 
-Tarea1                    USES _PTCD Cpu_Delay100US 
-Tarea2                    USES _PTCD Cpu_Delay100US 
+Task_AddReady             USES MainQueue Queue_Add MainList List_Get 
+main                      USES PE_low_level_init RTOS_Init Mutex_LED 
+                                Mutex_Create TCB_Tarea2 STRING.Tarea2.1 Stack_Tarea2 Tarea2 
+                                TaskBuilder TCB_Tarea3 STRING.Tarea3.2 Stack_Tarea3 Tarea3 
+                                TCB_Tarea4 STRING.Tarea4.3 Stack_Tarea4 Tarea4 
+                                TCB_InactiveTask STRING.Tarea.Inactiva.4 Stack_InactiveTask 
+                                InactiveTask start main 
+Tarea2                    USES Mutex_LED Mutex_Take _PTCD Cpu_Delay100US 
+                                Mutex_Give 
+Tarea3                    USES Mutex_LED Mutex_Take _PTCD Cpu_Delay100US 
+                                Mutex_Give 
+Tarea4                    USES Mutex_LED Mutex_Take _PTCD Cpu_Delay100US 
+                                Mutex_Give 
 Queue_Add                 USES _LINC _POP32 
 Queue_Get                 USES _LDEC _POP32 
 Queue_GetCount            USES _COPY 
 Init                      USES _startupData loadByte 
 _Startup                  USES __SEG_END_SSTACK Init main 
-SeriaAsincrono_Init       USES _SCI1C1 _SCI1C3 _SCI1C2 _SCI1S2 _SCI1BD 
+SM1_Interrupt             USES _SPI1S _SPI1D SerFlag BufferRead ErrFlag 
+                                SM1_OnError SM1_OnRxChar SM1_OnTxChar 
+SM1_Init                  USES SerFlag ErrFlag _SPI1S _SPI1D _SPI1BR _SPI1C2 
+                                _SPI1C1 
+SeriaAsincrono_Init       USES SerFlag EnUser _SCI1C1 _SCI1C3 _SCI1C2 _SCI1S2 
+                                _SCI1BD 
 HWEnDi                    USES EnUser _RTCSC 
 Timer_Init                USES _RTCSC EnUser _RTCMOD HWEnDi 
 _LINC                     USES _ENTER_UNARY_L 
 _LDEC                     USES _ENTER_UNARY_L 
-_vect                     USES Cpu_Interrupt Tick_OnInterrupt Cpu_SWIInterrupt 
-                                _EntryPoint 
+_vect                     USES Cpu_Interrupt Tick_OnInterrupt SM1_Interrupt 
+                                Cpu_OnSWI _EntryPoint 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -1251,32 +1344,78 @@ DEPENDENCY TREE
  |  |  |  +- HWEnDi              
  |  |  |       
  |  |  +- SeriaAsincrono_Init 
+ |  |  |    
+ |  |  +- SM1_Init            
  |  |       
  |  +- RTOS_Init           
  |  |  | 
  |  |  +- Queue_Create        
- |  |       
- |  +- Tarea1              
- |  |  | 
- |  |  +- Cpu_Delay100US      
- |  |       
- |  +- TaskBuilder         
- |  |  | 
- |  |  +- _COPY               
  |  |  |    
- |  |  +- InicializarStack    
- |  |  |    
- |  |  +- Queue_Add           
- |  |     | 
- |  |     +- _LINC               
- |  |     |  | 
- |  |     |  +- _ENTER_UNARY_L      
- |  |     |       
- |  |     +- _POP32              
- |  |          
+ |  |  +- List_Create         
+ |  |       
+ |  +- Mutex_Create        
+ |  |  | 
+ |  |  +- Queue_Create         (see above)
+ |  |     
  |  +- Tarea2              
  |  |  | 
+ |  |  +- Mutex_Take          
+ |  |  |  | 
+ |  |  |  +- Queue_Add           
+ |  |  |     | 
+ |  |  |     +- _LINC               
+ |  |  |     |  | 
+ |  |  |     |  +- _ENTER_UNARY_L      
+ |  |  |     |       
+ |  |  |     +- _POP32              
+ |  |  |          
+ |  |  +- Cpu_Delay100US      
+ |  |  |    
+ |  |  +- Mutex_Give          
+ |  |     | 
+ |  |     +- Queue_GetCount      
+ |  |     |  | 
+ |  |     |  +- _COPY               
+ |  |     |       
+ |  |     +- Queue_Get           
+ |  |     |  | 
+ |  |     |  +- _LDEC               
+ |  |     |  |  | 
+ |  |     |  |  +- _ENTER_UNARY_L       (see above)
+ |  |     |  |     
+ |  |     |  +- _POP32               (see above)
+ |  |     |     
+ |  |     +- Task_AddReady       
+ |  |        | 
+ |  |        +- Queue_Add            (see above)
+ |  |        |  
+ |  |        +- List_Get            
+ |  |           | 
+ |  |           +- _ICMP               
+ |  |                
+ |  +- TaskBuilder         
+ |  |  | 
+ |  |  +- _COPY                (see above)
+ |  |  |  
+ |  |  +- InicializarStack    
+ |  |  |    
+ |  |  +- Queue_Add            (see above)
+ |  |     
+ |  +- Tarea3              
+ |  |  | 
+ |  |  +- Mutex_Take           (see above)
+ |  |  |  
  |  |  +- Cpu_Delay100US       (see above)
+ |  |  |  
+ |  |  +- Mutex_Give           (see above)
+ |  |     
+ |  +- Tarea4              
+ |  |  | 
+ |  |  +- Mutex_Take           (see above)
+ |  |  |  
+ |  |  +- Cpu_Delay100US       (see above)
+ |  |  |  
+ |  |  +- Mutex_Give           (see above)
  |  |     
  |  +- InactiveTask        
  |  |    
@@ -1286,18 +1425,12 @@ DEPENDENCY TREE
  |        | 
  |        +- Queue_Add            (see above)
  |        |  
- |        +- Queue_GetCount      
- |        |  | 
- |        |  +- _COPY                (see above)
- |        |     
- |        +- Queue_Get           
- |           | 
- |           +- _LDEC               
- |           |  | 
- |           |  +- _ENTER_UNARY_L       (see above)
- |           |     
- |           +- _POP32               (see above)
- |              
+ |        +- List_Add            
+ |        |    
+ |        +- Queue_GetCount       (see above)
+ |        |  
+ |        +- Queue_Get            (see above)
+ |           
  +- _EntryPoint         
     | 
     +- _Startup            
@@ -1316,16 +1449,18 @@ DEPENDENCY TREE
  |  | 
  |  +- Scheduler            (see above)
  |     
- +- Cpu_SWIInterrupt    
+ +- SM1_Interrupt       
  |  | 
- |  +- Cpu_OnSwINT         
- |     | 
- |     +- savecontext         
- |     |    
- |     +- Scheduler            (see above)
- |     |  
- |     +- restortcontext      
- |          
+ |  +- SM1_OnError         
+ |  |    
+ |  +- SM1_OnRxChar        
+ |  |    
+ |  +- SM1_OnTxChar        
+ |       
+ +- Cpu_OnSWI           
+ |  | 
+ |  +- Scheduler            (see above)
+ |     
  +- _EntryPoint          (see above)
     
 *********************************************************************************************
@@ -1334,6 +1469,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 1519
+Number of blocks to be downloaded: 6
+Total size of all blocks to be downloaded: 2367
 

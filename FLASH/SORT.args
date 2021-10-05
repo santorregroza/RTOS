@@ -5,6 +5,8 @@
 -WmsgSd1100
 -WmsgSd1912 
 -Add("$(ProjDirPath)/FLASH/Sources/Events_c.obj"
+"$(ProjDirPath)/FLASH/Sources/List_c.obj"
+"$(ProjDirPath)/FLASH/Sources/Mutex_c.obj"
 "$(ProjDirPath)/FLASH/Sources/Port_c.obj"
 "$(ProjDirPath)/FLASH/Sources/Task_c.obj"
 "$(ProjDirPath)/FLASH/Sources/main_c.obj"
@@ -14,6 +16,8 @@
 "$(ProjDirPath)/FLASH/Generated_Code/IO_Map_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/LED1_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/Led_c.obj"
+"$(ProjDirPath)/FLASH/Generated_Code/Motor1_c.obj"
+"$(ProjDirPath)/FLASH/Generated_Code/SM1_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/SeriaAsincrono_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/Timer_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/Vectors_c.obj"

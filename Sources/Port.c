@@ -8,28 +8,24 @@
 #include "Port.h"
 #include "PE_Types.h"
 #include "IO_Map.h"
-//#include "Task.h"
 
-extern ps actualstack1;
-extern pc Scheduler(pc);
+
+extern puc actualstack1;
+extern puc Scheduler(puc);
 
 #pragma INLINE
 void savecontext(void){
-	//asm(RTI);
+	asm(TSX);
+	asm(STHX actualstack1);
 	
-	//	PSHH //++++
-		asm(TSX);
-		asm(STHX actualstack1);
-	//}
 }
 	
 #pragma INLINE
 void restortcontext(void){
-	//asm{
-		asm(LDHX	actualstack1);
-		asm(TXS);
-	//	PULH //++++
-	//}
+	
+	asm(LDHX	actualstack1);
+	asm(TXS);
+	
 }
 
 __interrupt void Tick_OnInterrupt(void)
@@ -42,12 +38,19 @@ __interrupt void Tick_OnInterrupt(void)
 	actualstack1=Scheduler(actualstack1);
 	//ticks algo 
 	restortcontext();
-	//asm(PULH);
-	//LED1_NegVal();
+}
+
+__interrupt void Cpu_OnSWI(void)
+{
+	savecontext();
+	actualstack1=Scheduler(actualstack1);
+	restortcontext();
+	//asm(RTI);
+	//Led_NegVal();
+  /* Write your code here ... */
 }
 
 void start(void){  //inicializar el sistema operativo 
-	 
 	actualstack1=Scheduler(actualstack1);
 	restortcontext();
 	asm(PULH);
@@ -70,18 +73,5 @@ puc InicializarStack(puc stack,unsigned long tamStack, taskcallback funcion){
 	actualstack--;
 	 *actualstack = 0;
 	 return actualstack;
-	/*stack += (tamStack-1) ; 					//aparta el tamaño del stack en el stack 
-		*stack = (c)(pt & 0x00FF);  				//mascara para el apuntador de la función 
-		stack--; 									//decrementamos el stack
-		*stack = (c)((pt>>8) & 0x00ff);  			//guardar la otra parte del callback 
-		stack--;									//De aqui en adelente para el contexto inicial
-		*stack = 0;
-		stack--;
-		*stack = 0;
-		stack--;
-		*stack = 0x60; 							//ver el CCR
-		stack--;
-		 *stack = 0;
-	return stack;*/
 }
 

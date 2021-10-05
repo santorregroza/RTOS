@@ -10,6 +10,8 @@ Generated_Code/Vectors_c.obj: \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/Timer.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/LED1.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/SeriaAsincrono.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/Motor1.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/SM1.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/port.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/types.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stdio.h \

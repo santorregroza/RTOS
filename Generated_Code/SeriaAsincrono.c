@@ -6,7 +6,7 @@
 **     Component   : AsynchroSerial
 **     Version     : Component 02.611, Driver 01.33, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2017-11-11, 14:57, # CodeGen: 18
+**     Date/Time   : 2017-11-13, 19:51, # CodeGen: 34
 **     Abstract    :
 **         This component "AsynchroSerial" implements an asynchronous serial
 **         communication. The component supports different settings of
@@ -47,6 +47,8 @@
 **
 **
 **     Contents    :
+**         Enable          - byte SeriaAsincrono_Enable(void);
+**         Disable         - byte SeriaAsincrono_Disable(void);
 **         RecvChar        - byte SeriaAsincrono_RecvChar(SeriaAsincrono_TComData *Chr);
 **         SendChar        - byte SeriaAsincrono_SendChar(SeriaAsincrono_TComData Chr);
 **         GetCharsInRxBuf - word SeriaAsincrono_GetCharsInRxBuf(void);
@@ -108,6 +110,75 @@
 
 
 
+/* SerFlag bits */
+#define OVERRUN_ERR      0x01U         /* Overrun error flag bit   */
+#define COMMON_ERR       0x02U         /* Common error of RX       */
+#define FULL_TX          0x04U         /* Full transmit buffer     */
+
+static byte SerFlag;                   /* Flags for serial communication */
+                                       /* Bit 0 - Overrun error */
+                                       /* Bit 1 - Common error of RX */
+                                       /* Bit 2 - Full TX buffer */
+static bool EnUser;                    /* Enable/Disable SCI */
+static SeriaAsincrono_TComData BufferWrite; /* Output char for SCI commmunication */
+
+/*
+** ===================================================================
+**     Method      :  SeriaAsincrono_Enable (component AsynchroSerial)
+**     Description :
+**         Enables the component - it starts the send and receive
+**         functions. Events may be generated
+**         ("DisableEvent"/"EnableEvent").
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+byte SeriaAsincrono_Enable(void)
+{
+  if (!EnUser) {                       /* Is the device disabled by user? */
+    EnUser = TRUE;                     /* If yes then set the flag "device enabled" */
+  SCI1BDH = 0x00U;                     /* Set high divisor register (enable device) */
+  SCI1BDL = 0xA4U;                     /* Set low divisor register (enable device) */
+    SCI1C2_TE = 0x01U;                  /* Enable transmitter */
+    SCI1C2_RE = 0x01U;                  /* Enable receiver */
+    if (SerFlag & FULL_TX) {           /* Is any char in the transmit buffer? */
+      while(SCI1S1_TDRE == 0U) {}      /* Wait for transmitter empty */
+      SCI1D = (byte)BufferWrite;       /* Store char to the transmitter register */
+      SerFlag &= (byte)(~(byte)FULL_TX); /* Clear the FULL_TX flag */
+    }
+  }
+  return ERR_OK;                       /* OK */
+}
+
+/*
+** ===================================================================
+**     Method      :  SeriaAsincrono_Disable (component AsynchroSerial)
+**     Description :
+**         Disables the component - it stops the send and receive
+**         functions. No events will be generated.
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+byte SeriaAsincrono_Disable(void)
+{
+  if (EnUser) {                        /* Is the device enabled by user? */
+    EnUser = FALSE;                    /* If yes then set the flag "device disabled" */
+    SCI1C2_RE = 0x00U;                  /* Disable receiver */
+    SCI1C2_TE = 0x00U;                  /* Disable transmitter */
+    SCI1BDH = 0x00U;                   /* Set high divisor register to zero (disable device) */
+    SCI1BDL = 0x00U;                   /* Set low divisor register to zero (disable device) */
+  }
+  return ERR_OK;                       /* OK */
+}
 
 /*
 ** ===================================================================
@@ -183,7 +254,15 @@ byte SeriaAsincrono_SendChar(SeriaAsincrono_TComData Chr)
   if (SCI1S1_TDRE == 0U) {             /* Is the transmitter full? */
     return ERR_TXFULL;                 /* If yes then error */
   }
-  SCI1D = (byte)Chr;                   /* Store char to the transmitter register */
+  if ((SerFlag & FULL_TX) != 0U) {     /* Or is the transmit buffer full? */
+    return ERR_TXFULL;                 /* If yes then error */
+  }
+  if (EnUser) {                        /* Is the device enabled by user? */
+    SCI1D = (byte)Chr;                 /* Store char to the transmitter register */
+  } else {
+    BufferWrite = Chr;
+    SerFlag |= FULL_TX;                /* Set the flag "full TX buffer" */
+  }
   return ERR_OK;                       /* OK */
 }
 
@@ -218,11 +297,10 @@ word SeriaAsincrono_GetCharsInRxBuf(void)
 **                           buffer.
 ** ===================================================================
 */
-/*
 word SeriaAsincrono_GetCharsInTxBuf(void)
-
-**      This method is implemented as a macro. See header module. **
-*/
+{
+  return ((EnUser) ? (SCI1S1_TDRE ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmitter buffer */
+}
 
 /*
 ** ===================================================================
@@ -237,6 +315,8 @@ word SeriaAsincrono_GetCharsInTxBuf(void)
 */
 void SeriaAsincrono_Init(void)
 {
+  SerFlag = 0x00U;                     /* Reset flags */
+  EnUser = TRUE;                       /* Enable device */
   /* SCI1C1: LOOPS=0,SCISWAI=0,RSRC=0,M=0,WAKE=0,ILT=0,PE=0,PT=0 */
   setReg8(SCI1C1, 0x00U);              /* Configure the SCI */ 
   /* SCI1C3: R8=0,T8=0,TXDIR=0,TXINV=0,ORIE=0,NEIE=0,FEIE=0,PEIE=0 */

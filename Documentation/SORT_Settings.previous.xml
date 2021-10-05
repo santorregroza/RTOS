@@ -936,5 +936,166 @@ asm(BGND);
       <EmptySection_DummyValue />
     </Events>
   </Bean>
+  <Bean name="SeriaAsincrono" type="AsynchroSerial">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="SeriaAsincrono" />
+      <Channel v="SCI1" />
+      <boolgroup name="Interrupt service/event" v="Disabled" />
+      <group name="Settings">
+        <Parity v="none" />
+        <Width v="8 bits" />
+        <Stop_bit v="1" />
+        <enumgroup name="SCI output mode" v="Normal">
+          <EmptySection_DummyValue />
+        </enumgroup>
+        <boolgroup name="Receiver" v="Enabled">
+          <RxD v="PTB0_KBI1P4_RxD1_ADP4" />
+        </boolgroup>
+        <boolgroup name="Transmitter" v="Enabled">
+          <TxD v="PTB1_KBI1P5_TxD1_ADP5" />
+        </boolgroup>
+        <Baud_rate v="9600 baud" />
+        <Break_signal v="Disabled" />
+        <Wakeup_condition v="Idle line wakeup" />
+        <Transmitter_output v="Not inverted" />
+        <Receiver_input v="Not inverted" />
+        <Stop_in_wait_mode v="no" />
+        <Idle_line_mode v="starts after start bit" />
+        <Break_generation_length v="Short" />
+        <Active_edge_detection v="Disabled" />
+      </group>
+      <group name="Initialization">
+        <Enabled_in_init__code v="yes" />
+        <Events_enabled_in_init_ v="yes" />
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled" />
+        <Low_speed_mode v="This component disabled" />
+        <Slow_speed_mode v="This component disabled" />
+      </group>
+    </Properties>
+    <Methods>
+      <Enable v="generate code" />
+      <Disable v="generate code" />
+      <EnableEvent v="don&amp;apos;t generate code" />
+      <DisableEvent v="don&amp;apos;t generate code" />
+      <RecvChar v="generate code" />
+      <SendChar v="generate code" />
+      <RecvBlock v="don&amp;apos;t generate code" />
+      <SendBlock v="don&amp;apos;t generate code" />
+      <ClearRxBuf v="don&amp;apos;t generate code" />
+      <ClearTxBuf v="don&amp;apos;t generate code" />
+      <CharsInRxBuf v="don&amp;apos;t generate code" />
+      <GetCharsInRxBuf v="generate code" />
+      <CharsInTxBuf v="don&amp;apos;t generate code" />
+      <GetCharsInTxBuf v="generate code" />
+      <SetBaudRateMode v="don&amp;apos;t generate code" />
+      <GetError v="don&amp;apos;t generate code" />
+      <GetBreak v="don&amp;apos;t generate code" />
+      <SetBreak v="don&amp;apos;t generate code" />
+      <TurnTxOn v="don&amp;apos;t generate code" />
+      <TurnTxOff v="don&amp;apos;t generate code" />
+      <TurnRxOn v="don&amp;apos;t generate code" />
+      <TurnRxOff v="don&amp;apos;t generate code" />
+      <LoopMode v="don&amp;apos;t generate code" />
+      <SetIdle v="don&amp;apos;t generate code" />
+      <Standby v="don&amp;apos;t generate code" />
+      <SetDirection v="don&amp;apos;t generate code" />
+      <GetRxIdle v="don&amp;apos;t generate code" />
+      <GetTxComplete v="don&amp;apos;t generate code" />
+      <EnableRxEdgeDetect v="don&amp;apos;t generate code" />
+      <DisableRxEdgeDetect v="don&amp;apos;t generate code" />
+    </Methods>
+    <Events>
+      <Event_module_name v="Events" />
+      <event name="BeforeNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="OnError" v="don&amp;apos;t generate code" />
+      <event name="OnRxChar" v="don&amp;apos;t generate code" />
+      <event name="OnRxCharExt" v="don&amp;apos;t generate code" />
+      <event name="OnTxChar" v="don&amp;apos;t generate code" />
+      <event name="OnFullRxBuf" v="don&amp;apos;t generate code" />
+      <event name="OnFreeTxBuf" v="don&amp;apos;t generate code" />
+      <event name="OnBreak" v="don&amp;apos;t generate code" />
+      <event name="OnIdle" v="don&amp;apos;t generate code" />
+      <event name="OnTxComplete" v="don&amp;apos;t generate code" />
+      <event name="OnRxActiveEdge" v="don&amp;apos;t generate code" />
+    </Events>
+  </Bean>
+  <Bean name="Motor1" type="BitsIO">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="Motor1" />
+      <Port v="PTF" />
+      <list name="Pins" v="8">
+        <group name="Pin0">
+          <Pin v="PTF0_ADP10" />
+          <Slew_rate_control_for_PTF0 v="no" />
+          <Drive_strength_for_PTF0 v="High" />
+        </group>
+        <group name="Pin1">
+          <Pin v="PTF1_ADP11" />
+          <Slew_rate_control_for_PTF1 v="no" />
+          <Drive_strength_for_PTF1 v="High" />
+        </group>
+        <group name="Pin2">
+          <Pin v="PTF2_ADP12" />
+          <Slew_rate_control_for_PTF2 v="no" />
+          <Drive_strength_for_PTF2 v="High" />
+        </group>
+        <group name="Pin3">
+          <Pin v="PTF3_ADP13" />
+          <Slew_rate_control_for_PTF3 v="no" />
+          <Drive_strength_for_PTF3 v="High" />
+        </group>
+        <group name="Pin4">
+          <Pin v="PTF4_ADP14" />
+          <Slew_rate_control_for_PTF4 v="no" />
+          <Drive_strength_for_PTF4 v="High" />
+        </group>
+        <group name="Pin5">
+          <Pin v="PTF5_ADP15" />
+          <Slew_rate_control_for_PTF5 v="no" />
+          <Drive_strength_for_PTF5 v="High" />
+        </group>
+        <group name="Pin6">
+          <Pin v="PTF6_ADP16" />
+          <Slew_rate_control_for_PTF6 v="no" />
+          <Drive_strength_for_PTF6 v="High" />
+        </group>
+        <group name="Pin7">
+          <Pin v="PTF7_ADP17" />
+          <Slew_rate_control_for_PTF7 v="no" />
+          <Drive_strength_for_PTF7 v="High" />
+        </group>
+      </list>
+      <Pull_resistor v="no pull resistor" />
+      <Open_drain v="push-pull" />
+      <Direction v="Output" />
+      <group name="Initialization">
+        <Init__direction v="Output" />
+        <Init__value v="0" />
+      </group>
+      <Safe_mode v="yes" />
+      <Optimization_for v="speed" />
+    </Properties>
+    <Methods>
+      <GetDir v="don&amp;apos;t generate code" />
+      <SetDir v="don&amp;apos;t generate code" />
+      <SetInput v="don&amp;apos;t generate code" />
+      <SetOutput v="don&amp;apos;t generate code" />
+      <GetVal v="generate code" />
+      <PutVal v="generate code" />
+      <GetBit v="generate code" />
+      <PutBit v="generate code" />
+      <SetBit v="generate code" />
+      <ClrBit v="generate code" />
+      <NegBit v="generate code" />
+    </Methods>
+    <Events>
+      <EmptySection_DummyValue />
+    </Events>
+  </Bean>
 </PE_PROJECT_SETTINGS_DOCUMENTATION>
 

@@ -5,13 +5,13 @@
  *      Author: envy
  */
 
-//#include	"Types.h"
-#include	"Task.h"
+#include "Task.h"
 #include "Port.h"
 #include "LED1.h"
 
 //#include 	"queue.h"
  T_QUEUE_HANDLER MainQueue;
+ T_LIST_HANDLER MainList;
 
 void InactiveTask(void) {
 	while (1){
@@ -22,7 +22,10 @@ void InactiveTask(void) {
 
 v RTOS_Init(v)
 {
+	
 	Queue_Create(&MainQueue);
+	List_Create(&MainList);
+	
 }
 
 puc Scheduler(puc Stack) {
@@ -31,23 +34,28 @@ puc Scheduler(puc Stack) {
 	//void *ActualTask;
 	if (ActualTask != NULL ) 
 	{
-		ActualTask->stackcurrent = Stack; //no sé
-		if (ActualTask->status ==running)
+		ActualTask->stackcurrent = Stack;
+		if (ActualTask->status == running)
 		{
-			ActualTask->status =ready;
+			ActualTask->status = ready;
 			if (ActualTask != &TCB_InactiveTask) 
-				Queue_Add( &MainQueue,&ActualTask->queueelement, (pv) ActualTask);
+				Queue_Add(&MainQueue,&ActualTask->queueelement, (pv) ActualTask);
+		}
+		else if (ActualTask->status == suspended)
+		{
+			if (ActualTask != &TCB_InactiveTask) 
+				List_Add(&MainList,&ActualTask->listElement, (pv) ActualTask);
 		}
 	}
 		
 	if(Queue_GetCount(&MainQueue) > 0)
 	{
 		ActualTask = Queue_Get(&MainQueue); //
-		ActualTask->status =running;		//
+		ActualTask->status = running;		//
 		return ActualTask->stackcurrent;	//
 	}
 	ActualTask = &TCB_InactiveTask;
-	ActualTask->status =running;
+	ActualTask->status = running;
 	return ActualTask->stackcurrent;
 }
 
@@ -76,3 +84,14 @@ v TaskBuilder(_P_TCB _TCB_TASK, us ID, puc TaskName, ul TamStack,puc Stack, task
 	//}
 }
 
+void Task_Star(void){
+}
+
+uc Task_AddReady(_P_TCB task){
+	uc res=0;
+	task->status = ready;
+	Queue_Add(&MainQueue,&task->queueelement,(pv)task);
+	List_Get(&MainList,(&task->listElement)->Position);
+	res=1;
+	return res;
+}

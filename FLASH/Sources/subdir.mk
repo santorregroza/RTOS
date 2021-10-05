@@ -7,6 +7,8 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS_QUOTED += \
 "../Sources/Events.c" \
+"../Sources/List.c" \
+"../Sources/Mutex.c" \
 "../Sources/Port.c" \
 "../Sources/Task.c" \
 "../Sources/main.c" \
@@ -14,6 +16,8 @@ C_SRCS_QUOTED += \
 
 C_SRCS += \
 ../Sources/Events.c \
+../Sources/List.c \
+../Sources/Mutex.c \
 ../Sources/Port.c \
 ../Sources/Task.c \
 ../Sources/main.c \
@@ -21,6 +25,8 @@ C_SRCS += \
 
 OBJS += \
 ./Sources/Events_c.obj \
+./Sources/List_c.obj \
+./Sources/Mutex_c.obj \
 ./Sources/Port_c.obj \
 ./Sources/Task_c.obj \
 ./Sources/main_c.obj \
@@ -28,6 +34,8 @@ OBJS += \
 
 OBJS_QUOTED += \
 "./Sources/Events_c.obj" \
+"./Sources/List_c.obj" \
+"./Sources/Mutex_c.obj" \
 "./Sources/Port_c.obj" \
 "./Sources/Task_c.obj" \
 "./Sources/main_c.obj" \
@@ -35,6 +43,8 @@ OBJS_QUOTED += \
 
 C_DEPS += \
 ./Sources/Events_c.d \
+./Sources/List_c.d \
+./Sources/Mutex_c.d \
 ./Sources/Port_c.d \
 ./Sources/Task_c.d \
 ./Sources/main_c.d \
@@ -42,6 +52,8 @@ C_DEPS += \
 
 C_DEPS_QUOTED += \
 "./Sources/Events_c.d" \
+"./Sources/List_c.d" \
+"./Sources/Mutex_c.d" \
 "./Sources/Port_c.d" \
 "./Sources/Task_c.d" \
 "./Sources/main_c.d" \
@@ -49,6 +61,8 @@ C_DEPS_QUOTED += \
 
 OBJS_OS_FORMAT += \
 ./Sources/Events_c.obj \
+./Sources/List_c.obj \
+./Sources/Mutex_c.obj \
 ./Sources/Port_c.obj \
 ./Sources/Task_c.obj \
 ./Sources/main_c.obj \
@@ -69,9 +83,25 @@ Sources/%.d: ../Sources/%.c
 	
 	@echo ' '
 
-Sources/Port_c.obj: ../Sources/Port.c
+Sources/List_c.obj: ../Sources/List.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #2 $<'
+	@echo 'Invoking: HCS08 Compiler'
+	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/List.args" -ObjN="Sources/List_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/Mutex_c.obj: ../Sources/Mutex.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #3 $<'
+	@echo 'Invoking: HCS08 Compiler'
+	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/Mutex.args" -ObjN="Sources/Mutex_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/Port_c.obj: ../Sources/Port.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #4 $<'
 	@echo 'Invoking: HCS08 Compiler'
 	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/Port.args" -ObjN="Sources/Port_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
 	@echo 'Finished building: $<'
@@ -79,7 +109,7 @@ Sources/Port_c.obj: ../Sources/Port.c
 
 Sources/Task_c.obj: ../Sources/Task.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #3 $<'
+	@echo 'Executing target #5 $<'
 	@echo 'Invoking: HCS08 Compiler'
 	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/Task.args" -ObjN="Sources/Task_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
 	@echo 'Finished building: $<'
@@ -87,7 +117,7 @@ Sources/Task_c.obj: ../Sources/Task.c
 
 Sources/main_c.obj: ../Sources/main.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #4 $<'
+	@echo 'Executing target #6 $<'
 	@echo 'Invoking: HCS08 Compiler'
 	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/main.args" -ObjN="Sources/main_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
 	@echo 'Finished building: $<'
@@ -95,7 +125,7 @@ Sources/main_c.obj: ../Sources/main.c
 
 Sources/queue_c.obj: ../Sources/queue.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #7 $<'
 	@echo 'Invoking: HCS08 Compiler'
 	"$(HC08ToolsEnv)/chc08" -ArgFile"Sources/queue.args" -ObjN="Sources/queue_c.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
 	@echo 'Finished building: $<'

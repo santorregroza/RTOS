@@ -865,7 +865,7 @@ asm(BGND);
         <Interrupt v="Vrtc" />
         <Interrupt_priority v="medium priority" />
       </boolgroup>
-      <Interrupt_period v="1 sec" />
+      <Interrupt_period v="0.1 sec" />
       <Same_period_in_modes v="yes" />
       <Component_uses_entire_timer v="no" />
       <group name="Initialization">
@@ -976,8 +976,8 @@ asm(BGND);
       </group>
     </Properties>
     <Methods>
-      <Enable v="don&amp;apos;t generate code" />
-      <Disable v="don&amp;apos;t generate code" />
+      <Enable v="generate code" />
+      <Disable v="generate code" />
       <EnableEvent v="don&amp;apos;t generate code" />
       <DisableEvent v="don&amp;apos;t generate code" />
       <RecvChar v="generate code" />
@@ -1021,6 +1021,174 @@ asm(BGND);
       <event name="OnIdle" v="don&amp;apos;t generate code" />
       <event name="OnTxComplete" v="don&amp;apos;t generate code" />
       <event name="OnRxActiveEdge" v="don&amp;apos;t generate code" />
+    </Events>
+  </Bean>
+  <Bean name="Motor1" type="BitsIO">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="Motor1" />
+      <Port v="PTF" />
+      <list name="Pins" v="8">
+        <group name="Pin0">
+          <Pin v="PTF0_ADP10" />
+          <Slew_rate_control_for_PTF0 v="no" />
+          <Drive_strength_for_PTF0 v="High" />
+        </group>
+        <group name="Pin1">
+          <Pin v="PTF1_ADP11" />
+          <Slew_rate_control_for_PTF1 v="no" />
+          <Drive_strength_for_PTF1 v="High" />
+        </group>
+        <group name="Pin2">
+          <Pin v="PTF2_ADP12" />
+          <Slew_rate_control_for_PTF2 v="no" />
+          <Drive_strength_for_PTF2 v="High" />
+        </group>
+        <group name="Pin3">
+          <Pin v="PTF3_ADP13" />
+          <Slew_rate_control_for_PTF3 v="no" />
+          <Drive_strength_for_PTF3 v="High" />
+        </group>
+        <group name="Pin4">
+          <Pin v="PTF4_ADP14" />
+          <Slew_rate_control_for_PTF4 v="no" />
+          <Drive_strength_for_PTF4 v="High" />
+        </group>
+        <group name="Pin5">
+          <Pin v="PTF5_ADP15" />
+          <Slew_rate_control_for_PTF5 v="no" />
+          <Drive_strength_for_PTF5 v="High" />
+        </group>
+        <group name="Pin6">
+          <Pin v="PTF6_ADP16" />
+          <Slew_rate_control_for_PTF6 v="no" />
+          <Drive_strength_for_PTF6 v="High" />
+        </group>
+        <group name="Pin7">
+          <Pin v="PTF7_ADP17" />
+          <Slew_rate_control_for_PTF7 v="no" />
+          <Drive_strength_for_PTF7 v="High" />
+        </group>
+      </list>
+      <Pull_resistor v="no pull resistor" />
+      <Open_drain v="push-pull" />
+      <Direction v="Output" />
+      <group name="Initialization">
+        <Init__direction v="Output" />
+        <Init__value v="0" />
+      </group>
+      <Safe_mode v="yes" />
+      <Optimization_for v="speed" />
+    </Properties>
+    <Methods>
+      <GetDir v="don&amp;apos;t generate code" />
+      <SetDir v="don&amp;apos;t generate code" />
+      <SetInput v="don&amp;apos;t generate code" />
+      <SetOutput v="don&amp;apos;t generate code" />
+      <GetVal v="generate code" />
+      <PutVal v="generate code" />
+      <GetBit v="generate code" />
+      <PutBit v="generate code" />
+      <SetBit v="generate code" />
+      <ClrBit v="generate code" />
+      <NegBit v="generate code" />
+    </Methods>
+    <Events>
+      <EmptySection_DummyValue />
+    </Events>
+  </Bean>
+  <Bean name="SM1" type="SynchroMaster">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="SM1" />
+      <Channel v="SPI1" />
+      <boolgroup name="Interrupt service/event" v="Enabled">
+        <Interrupt v="Vspi1" />
+        <Interrupt_from_input v="" />
+        <Interrupt_input_priority v="medium priority" />
+        <Interrupt_from_output v="" />
+        <Interrupt_output_priority v="medium priority" />
+        <Input_buffer_size v="0" />
+        <Output_buffer_size v="0" />
+      </boolgroup>
+      <group name="Settings">
+        <Bidirectional_mode v="Disabled" />
+        <boolgroup name="Input pin" v="Enabled">
+          <Pin v="PTE2_MISO1" />
+        </boolgroup>
+        <boolgroup name="Output pin" v="Enabled">
+          <Pin v="PTE1_MOSI1" />
+        </boolgroup>
+        <group name="Clock pin">
+          <Pin v="PTE0_TPM2CLK_SPSCK1" />
+        </group>
+        <boolgroup name="Slave select pin" v="Disabled" />
+        <Clock_edge sel_value="rising edge">
+          
+rising or falling edge
+
+          <EmptySection_DummyValue />
+        </Clock_edge>
+        <Shift_clock_rate v="2.5 &amp;#181;s" />
+        <Empty_character v="0" />
+        <Ignore_empty_char_ v="no" />
+        <Send_MSB_first v="no" />
+        <Shift_clock_idle_polarity v="Low" />
+        <Fault_mode v="Disabled" />
+        <Stop_in_wait_mode v="no" />
+      </group>
+      <group name="Initialization">
+        <Direction_in_init_ v="Input" />
+        <Enabled_in_init__code v="yes" />
+        <Events_enabled_in_init_ v="yes" />
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled" />
+        <Low_speed_mode v="This component disabled" />
+        <Slow_speed_mode v="This component disabled" />
+      </group>
+    </Properties>
+    <Methods>
+      <Enable v="don&amp;apos;t generate code" />
+      <Disable v="don&amp;apos;t generate code" />
+      <EnableEvent v="don&amp;apos;t generate code" />
+      <DisableEvent v="don&amp;apos;t generate code" />
+      <RecvChar v="generate code" />
+      <SendChar v="generate code" />
+      <RecvBlock v="don&amp;apos;t generate code" />
+      <SendBlock v="don&amp;apos;t generate code" />
+      <ClearRxBuf v="don&amp;apos;t generate code" />
+      <ClearTxBuf v="don&amp;apos;t generate code" />
+      <CharsInRxBuf v="don&amp;apos;t generate code" />
+      <GetCharsInRxBuf v="generate code" />
+      <CharsInTxBuf v="don&amp;apos;t generate code" />
+      <GetCharsInTxBuf v="generate code" />
+      <SetBaudRateMode v="don&amp;apos;t generate code" />
+      <SetShiftClockPolarity v="don&amp;apos;t generate code" />
+      <SetIdleClockPolarity v="don&amp;apos;t generate code" />
+      <GetError v="generate code" />
+      <SetDir v="don&amp;apos;t generate code" />
+    </Methods>
+    <Events>
+      <Event_module_name v="Events" />
+      <event name="BeforeNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="OnRxChar" v="generate code">
+        <Event_procedure_name v="SM1_OnRxChar" />
+        <Priority v="same as interrupt" />
+      </event>
+      <event name="OnRxCharExt" v="don&amp;apos;t generate code" />
+      <event name="OnTxChar" v="generate code">
+        <Event_procedure_name v="SM1_OnTxChar" />
+        <Priority v="same as interrupt" />
+      </event>
+      <event name="OnFullRxBuf" v="don&amp;apos;t generate code" />
+      <event name="OnFreeTxBuf" v="don&amp;apos;t generate code" />
+      <event name="OnError" v="generate code">
+        <Event_procedure_name v="SM1_OnError" />
+        <Priority v="same as interrupt" />
+      </event>
+      <event name="OnFault" v="don&amp;apos;t generate code" />
     </Events>
   </Bean>
 </PE_PROJECT_SETTINGS_DOCUMENTATION>

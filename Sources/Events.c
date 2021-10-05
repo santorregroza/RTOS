@@ -1,6 +1,6 @@
 /* ###################################################################
 **     Filename    : Events.c
-**     Project     : SORT
+**     Project     : SORT1
 **     Processor   : MC9S08QE128CLK
 **     Component   : Events
 **     Version     : Driver 01.02
@@ -84,6 +84,66 @@ void Timer_OnInterrupt(void)
 	restortcontext();
 	//asm(PULH);
 	//LED1_NegVal();
+}
+
+/*
+** ===================================================================
+**     Event       :  SM1_OnRxChar (module Events)
+**
+**     Component   :  SM1 [SynchroMaster]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**         
+**         [ Version specific information for Freescale HCS08 and RS08
+**         and HCS12 and HCS12X and ColdFireV1 derivatives ] 
+**         The <Bidirectional mode> property setting doesn't affect
+**         this event. For more information please see <Bidirectional
+**         mode behavior> paragraph.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void SM1_OnRxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  SM1_OnTxChar (module Events)
+**
+**     Component   :  SM1 [SynchroMaster]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void SM1_OnTxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  SM1_OnError (module Events)
+**
+**     Component   :  SM1 [SynchroMaster]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void SM1_OnError(void)
+{
+  /* Write your code here ... */
 }
 
 /* END Events */

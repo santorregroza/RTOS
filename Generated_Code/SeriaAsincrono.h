@@ -6,7 +6,7 @@
 **     Component   : AsynchroSerial
 **     Version     : Component 02.611, Driver 01.33, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2017-11-11, 14:57, # CodeGen: 18
+**     Date/Time   : 2017-11-13, 19:51, # CodeGen: 34
 **     Abstract    :
 **         This component "AsynchroSerial" implements an asynchronous serial
 **         communication. The component supports different settings of
@@ -47,6 +47,8 @@
 **
 **
 **     Contents    :
+**         Enable          - byte SeriaAsincrono_Enable(void);
+**         Disable         - byte SeriaAsincrono_Disable(void);
 **         RecvChar        - byte SeriaAsincrono_RecvChar(SeriaAsincrono_TComData *Chr);
 **         SendChar        - byte SeriaAsincrono_SendChar(SeriaAsincrono_TComData Chr);
 **         GetCharsInRxBuf - word SeriaAsincrono_GetCharsInRxBuf(void);
@@ -137,6 +139,39 @@
 
 
 
+byte SeriaAsincrono_Enable(void);
+/*
+** ===================================================================
+**     Method      :  SeriaAsincrono_Enable (component AsynchroSerial)
+**     Description :
+**         Enables the component - it starts the send and receive
+**         functions. Events may be generated
+**         ("DisableEvent"/"EnableEvent").
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+
+byte SeriaAsincrono_Disable(void);
+/*
+** ===================================================================
+**     Method      :  SeriaAsincrono_Disable (component AsynchroSerial)
+**     Description :
+**         Disables the component - it stops the send and receive
+**         functions. No events will be generated.
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+
 byte SeriaAsincrono_RecvChar(SeriaAsincrono_TComData *Chr);
 /*
 ** ===================================================================
@@ -210,8 +245,7 @@ byte SeriaAsincrono_SendChar(SeriaAsincrono_TComData Chr);
 ** ===================================================================
 */
 
-#define SeriaAsincrono_GetCharsInTxBuf() \
-(SCI1S1_TDRE ? (word)0U : (word)1U)    /* Return number of chars in the transmitter buffer */
+word SeriaAsincrono_GetCharsInTxBuf(void);
 /*
 ** ===================================================================
 **     Method      :  SeriaAsincrono_GetCharsInTxBuf (component AsynchroSerial)

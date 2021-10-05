@@ -5,7 +5,7 @@
 **     Processor   : MC9S08QE128CLK
 **     Version     : Component 01.003, Driver 01.40, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2017-11-11, 14:57, # CodeGen: 18
+**     Date/Time   : 2017-12-02, 10:36, # CodeGen: 40
 **     Abstract    :
 **         This component "MC9S08QE128_80" contains initialization 
 **         of the CPU and provides basic methods and events for 
@@ -63,6 +63,8 @@
 #include "Timer.h"
 #include "LED1.h"
 #include "SeriaAsincrono.h"
+#include "Motor1.h"
+#include "SM1.h"
 #include "port.h"
 
 /*lint -save  -e950 Disable MISRA rule (1.1) checking. */
@@ -86,7 +88,7 @@ static void (* near const _vect[])(void) @0xFFC0 = { /* Interrupt vector table *
          Cpu_Interrupt,                /* Int.no. 16 Vsci1tx (at FFDE)               Unassigned */
          Cpu_Interrupt,                /* Int.no. 15 Vsci1rx (at FFE0)               Unassigned */
          Cpu_Interrupt,                /* Int.no. 14 Vsci1err (at FFE2)              Unassigned */
-         Cpu_Interrupt,                /* Int.no. 13 Vspi1 (at FFE4)                 Unassigned */
+         SM1_Interrupt,                /* Int.no. 13 Vspi1 (at FFE4)                 Used */
          Cpu_Interrupt,                /* Int.no. 12 Vspi2 (at FFE6)                 Unassigned */
          Cpu_Interrupt,                /* Int.no. 11 Vtpm2ovf (at FFE8)              Unassigned */
          Cpu_Interrupt,                /* Int.no. 10 Vtpm2ch2 (at FFEA)              Unassigned */
@@ -98,7 +100,7 @@ static void (* near const _vect[])(void) @0xFFC0 = { /* Interrupt vector table *
          Cpu_Interrupt,                /* Int.no.  4 Vtpm1ch0 (at FFF6)              Unassigned */
          Cpu_Interrupt,                /* Int.no.  3 Vlvd (at FFF8)                  Unassigned */
          Cpu_Interrupt,                /* Int.no.  2 Virq (at FFFA)                  Unassigned */
-         Cpu_SWIInterrupt,             /* Int.no.  1 Vswi (at FFFC)                  Used */
+         Cpu_OnSWI,             /* Int.no.  1 Vswi (at FFFC)                  Used */
          _EntryPoint                   /* Int.no.  0 Vreset (at FFFE)                Reset vector */
 };
 /*!

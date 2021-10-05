@@ -1,8 +1,8 @@
 
-Sources/queue_c.obj: \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Project_Headers/../Sources/queue.c \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/Queue.h \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/Types.h \
+Sources/List_c.obj: \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Project_Headers/../Sources/List.c \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/List.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/types.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stdio.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stddef.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stdarg.h \

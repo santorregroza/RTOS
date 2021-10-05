@@ -14,9 +14,9 @@ Sources/Task_c.obj: \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stdtypes.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/errno.h \
 	C:/Freescale/CW\ MCU\ v10.7/MCU/lib/hc08c/include/stdlib.h \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/port.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/List.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/types.h \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/task.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Sources/port.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/LED1.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/PE_Types.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/PE_Error.h \

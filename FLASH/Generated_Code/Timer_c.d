@@ -22,5 +22,7 @@ Generated_Code/Timer_c.obj: \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/Cpu.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/Timer.h \
 	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/LED1.h \
-	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/SeriaAsincrono.h 
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/SeriaAsincrono.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/Motor1.h \
+	C:/Users/envy/Documents/E.C.I/Octavo\ semestre/SORT/workspaceCodeWarrior/SORT/Generated_Code/SM1.h 
 

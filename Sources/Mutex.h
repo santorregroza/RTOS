@@ -1,12 +1,14 @@
 /*
- * Queue.h
+ * Mutex.h
  *
- *  Created on: Sep 2, 2017
- *      Author: GABRIEL
+ *  Created on: Nov 19, 2017
+ *      Author: envy
  */
 
-#ifndef QUEUE_H_
-#define QUEUE_H_
+#ifndef MUTEX_H_
+#define MUTEX_H_
+
+
 
 /*****************************************************************************
 ******************************************************************************
@@ -16,7 +18,11 @@
 ******************************************************************************
 *****************************************************************************/
 
+
 #include "Types.h"
+#include "queue.h"
+#include "List.h"
+
 
 /*****************************************************************************
 ******************************************************************************
@@ -42,18 +48,11 @@
 ******************************************************************************
 *****************************************************************************/
 
-typedef struct
-{
-	pv Cabeza;
-	pv Cola;
-	u16 Tama;
-}T_QUEUE_HANDLER, * T_QUEUE_HANDLER_PTR;
-
-typedef struct
-{
-	pv Data;
-	pv Next;
-}T_QUEUE_ELEMNT, * T_QUEUE_ELEMENT_PTR;
+typedef struct{
+	uc mutex_status;
+	T_QUEUE_HANDLER mutex_queue;
+	 
+}T_MUTEX_HANDLER,* T_MUTEX_HANDLER_PTR;
 
 /*****************************************************************************
 ******************************************************************************
@@ -63,13 +62,9 @@ typedef struct
 ******************************************************************************
 *****************************************************************************/
 
-v Queue_Create(T_QUEUE_HANDLER_PTR Queue);
-T_QUEUE_HANDLER_PTR Queue_CreateDinamic(v);
-v Queue_Add(T_QUEUE_HANDLER_PTR Queue, T_QUEUE_ELEMENT_PTR Element, pv Data);
-v Queue_AddDinamic(T_QUEUE_HANDLER_PTR Queue, pv Data);
-pv Queue_Top(T_QUEUE_HANDLER_PTR Queue);
-pv Queue_Get(T_QUEUE_HANDLER_PTR Queue);
-pv Queue_GetDinamic(T_QUEUE_HANDLER_PTR Queue);
-u16 Queue_GetCount(T_QUEUE_HANDLER_PTR Queue);
+uc Mutex_Create(T_MUTEX_HANDLER_PTR mutex);
+uc Mutex_Take(T_MUTEX_HANDLER_PTR mutex);
+uc Mutex_Give(T_MUTEX_HANDLER_PTR mutex);
 
-#endif /* QUEUE_H_ */
+
+#endif /* MUTEX_H_ */

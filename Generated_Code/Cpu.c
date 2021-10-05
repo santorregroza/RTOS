@@ -7,7 +7,7 @@
 **     Version     : Component 01.003, Driver 01.40, CPU db: 3.00.067
 **     Datasheet   : MC9S08QE128RM Rev. 2 6/2007
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2017-11-11, 14:57, # CodeGen: 18
+**     Date/Time   : 2017-11-18, 23:58, # CodeGen: 38
 **     Abstract    :
 **         This component "MC9S08QE128_80" contains initialization 
 **         of the CPU and provides basic methods and events for 
@@ -71,6 +71,8 @@
 #include "Timer.h"
 #include "LED1.h"
 #include "SeriaAsincrono.h"
+#include "Motor1.h"
+#include "SM1.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -226,6 +228,8 @@ void _EntryPoint(void)
   /* Common initialization of the write once registers */
   /* SOPT1: COPE=0,COPT=1,STOPE=0,??=0,??=0,RSTOPE=0,BKGDPE=1,RSTPE=0 */
   setReg8(SOPT1, 0x42U);                
+  /* SOPT2: COPCLKS=0,??=0,??=0,??=0,SPI1PS=1,ACIC2=0,IIC1PS=0,ACIC1=0 */
+  setReg8(SOPT2, 0x08U);                
   /* SPMSC1: LVDF=0,LVDACK=0,LVDIE=0,LVDRE=1,LVDSE=1,LVDE=0,??=0,BGBE=0 */
   setReg8(SPMSC1, 0x18U);               
   /* SPMSC2: LPR=0,LPRS=0,LPWUI=0,??=0,PPDF=0,PPDACK=0,PPDE=1,PPDC=0 */
@@ -287,6 +291,16 @@ void PE_low_level_init(void)
   clrSetReg8Bits(PTBDD, 0x01U, 0x02U);  
   /* PTBD: PTBD1=1 */
   setReg8Bits(PTBD, 0x02U);             
+  /* PTFD: PTFD7=0,PTFD6=0,PTFD5=0,PTFD4=0,PTFD3=0,PTFD2=0,PTFD1=0,PTFD0=0 */
+  setReg8(PTFD, 0x00U);                 
+  /* PTFPE: PTFPE7=0,PTFPE6=0,PTFPE5=0,PTFPE4=0,PTFPE3=0,PTFPE2=0,PTFPE1=0,PTFPE0=0 */
+  setReg8(PTFPE, 0x00U);                
+  /* PTFDD: PTFDD7=1,PTFDD6=1,PTFDD5=1,PTFDD4=1,PTFDD3=1,PTFDD2=1,PTFDD1=1,PTFDD0=1 */
+  setReg8(PTFDD, 0xFFU);                
+  /* PTEDD: PTEDD2=0,PTEDD1=1,PTEDD0=1 */
+  clrSetReg8Bits(PTEDD, 0x04U, 0x03U);  
+  /* PTED: PTED0=0 */
+  clrReg8Bits(PTED, 0x01U);             
   /* PTASE: PTASE7=0,PTASE6=0,PTASE4=0,PTASE3=0,PTASE2=0,PTASE1=0,PTASE0=0 */
   clrReg8Bits(PTASE, 0xDFU);            
   /* PTBSE: PTBSE7=0,PTBSE6=0,PTBSE5=0,PTBSE4=0,PTBSE3=0,PTBSE2=0,PTBSE1=0,PTBSE0=0 */
@@ -330,6 +344,9 @@ void PE_low_level_init(void)
   /* ### BitIO "LED1" init code ... */
   /* ### Asynchro serial "SeriaAsincrono" init code ... */
   SeriaAsincrono_Init();
+  /* ### BitsIO "Motor1" init code ... */
+  /* ###  Synchro master "SM1" init code ... */
+  SM1_Init();
   CCR_lock = (byte)0;
   __EI();                              /* Enable interrupts */
 }
